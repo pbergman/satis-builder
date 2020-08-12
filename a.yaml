@@ -1,0 +1,16 @@
+tasks:
+  build-musl:
+    description: build with musl-c bindings
+    opts:
+      -
+        name: file
+        description: output file name
+        default: satis-builder_musl
+        mode: required
+      -
+        name: no-strip
+        description: do not strip binary file of debug symbols (reduce size)
+
+    exec:
+      - CC=$(which musl-gcc) go build -o {{ opt('file') }} --ldflags '-w -linkmode external -extldflags "-static"'
+      - '{% if not opt("no-strip") %}strip {{ opt("file") }}{% endif %}'
