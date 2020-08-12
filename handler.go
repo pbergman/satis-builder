@@ -83,7 +83,7 @@ func (h *Handler) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 
 	if nil != hasher {
 		if e := "sha1=" + hex.EncodeToString(hasher.Sum(nil)); e != req.Header.Get("x-hub-signature") {
-			h.logger.Error(fmt.Sprintf("[%s] invalid payload signature %s' != '%s'", id, e, req.Header.Get("x-hub-signature")))
+			h.logger.Error(fmt.Sprintf("[%s] invalid payload signature '%s' != '%s'", id, e, req.Header.Get("x-hub-signature")))
 			http.Error(resp, "", http.StatusNotAcceptable)
 			return
 		}
@@ -121,5 +121,8 @@ func (h *Handler) ServeHTTP(resp http.ResponseWriter, req *http.Request) {
 		} else {
 			h.logger.Info(fmt.Sprintf("[%s] not processing because repo is no managed", id))
 		}
+
+		_, _ = fmt.Fprintf(resp, "successfuly updated repository '%s'", data.R.N)
+
 	}
 }
