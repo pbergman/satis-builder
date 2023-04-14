@@ -11,7 +11,7 @@ import (
 )
 
 func getLogger() *logger.Logger {
-	return logger.NewLogger("app", logger.NewWriterHandler(os.Stdout, logger.Debug, false))
+	return logger.NewLogger("app", logger.NewWriterHandler(os.Stdout, logger.LogLevelDebug(), false))
 }
 
 func main() {
