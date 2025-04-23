@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/jsonmessage"
 	"github.com/pbergman/logger"
@@ -55,7 +55,7 @@ func CheckImages(ctx context.Context, cli *client.Client, cnf *Config, logger *l
 
 func PullImage(ctx context.Context, cli *client.Client, cnf *Config, logger *logger.Logger) error {
 
-	resp, err := cli.ImagePull(ctx, cnf.Container.Name, types.ImagePullOptions{})
+	resp, err := cli.ImagePull(ctx, cnf.Container.Name, image.PullOptions{})
 
 	if err != nil {
 		return err
@@ -87,7 +87,7 @@ func PullImage(ctx context.Context, cli *client.Client, cnf *Config, logger *log
 }
 
 func HasImage(ctx context.Context, cli *client.Client, cnf *Config) (bool, error) {
-	sum, err := cli.ImageList(ctx, types.ImageListOptions{})
+	sum, err := cli.ImageList(ctx, image.ListOptions{})
 
 	if err != nil {
 		return false, err
@@ -181,7 +181,7 @@ func BuildSatis(ctx context.Context, cli *client.Client, user *user.User, cnf *C
 
 	logger.Debug("starting container")
 
-	if err := cli.ContainerStart(ctx, created.ID, types.ContainerStartOptions{}); err != nil {
+	if err := cli.ContainerStart(ctx, created.ID, container.StartOptions{}); err != nil {
 		return err
 	}
 

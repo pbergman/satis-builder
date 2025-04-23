@@ -1,10 +1,20 @@
 ## Satis Builder
 
-github webhook listener that wil (re)build satis in an docker when events are received.
+github webhook listener that will (re)build satis in a docker when events are received.
 
 #### dependencies
 
 docker (only server, this app uses the client SDK)
+
+#### Signals
+
+the application will listen to signals which can be used to update or pull image from remote.  
+
+| Signal |Description
+|--------|-----
+| SIGUSR1 |rebuild satis build
+| SIGUSR2 |pull (update) image from docker remote    
+    
 
 #### config
 
